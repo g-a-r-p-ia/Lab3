@@ -1,12 +1,14 @@
-using c = LabWithJson.MainPage;
+
 using Newtonsoft.Json;
 
 namespace LabWithJson
 {
     public partial class NewPage1 : ContentPage
     {
-        public NewPage1()
+        private MainPage mainPage;
+        public NewPage1(MainPage mainPage)
         {
+            this.mainPage = mainPage;
             InitializeComponent();
         }
 
@@ -21,13 +23,14 @@ namespace LabWithJson
                 Killer = Killer.Text,
                 DateOfDeath = new DateTime(DateT.Date.Year, DateT.Date.Month, DateT.Date.Day)
             };
-            c.Victims.Add(newVictim);
+            mainPage.Victims.Add(newVictim);
 
-            // Serialize the updated data back to JSON
-            string updatedJson = JsonConvert.SerializeObject(c.Victims, Formatting.Indented);
+            string updatedJson = JsonConvert.SerializeObject(mainPage.Victims, Newtonsoft.Json.Formatting.Indented);
 
             // Write the updated JSON back to the file
-            File.WriteAllText(c.filePath, updatedJson);
+            File.WriteAllText(mainPage.filePath, updatedJson);
+
+
 
             App.Current.MainPage = new NavigationPage(new MainPage());
         }

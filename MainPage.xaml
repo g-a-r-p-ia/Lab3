@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dg="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
-             x:Class="LabWithJson.MainPage">
+             x:Class="LabWithJson.MainPage"
+             Title="Crimes">
     <Grid RowDefinitions="140,*">
         <Grid >
             <Grid.RowDefinitions>
@@ -14,14 +15,32 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button  Text="Clear all" Clicked="Button_Clicked" Margin="10" />
-            <Button Grid.Row="0" Grid.Column="1" Text="Add" Clicked="AddVictim"/>
-            <Button Grid.Row="1" Grid.Column="1" Text="Delete" Clicked="DeleteVictim"/>
-            <Entry Grid.Column="0" Grid.Row="1" Completed="Search"/>
+            <Button Grid.Row="0" Grid.Column="1" Text="Add" Clicked="AddVictim" Margin="10"/>
+            <Button Grid.Row="1" Grid.Column="1" Text="Delete" Clicked="DeleteVictim" Margin="10"/>
+            <Grid Grid.Column="0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Picker x:Name="picker"
+                        Title="Select searching" Margin="2" VerticalOptions="CenterAndExpand">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Name</x:String>
+                            <x:String>Cause of death</x:String>
+                            <x:String>Years</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Entry Grid.Column="1" TextChanged="OnEntryTextChanged" x:Name="entry"/>
+                <Button Grid.Column="2" Clicked="Go" Margin="10" Text="Search"/>
+            </Grid>
         </Grid>
 
         <dg:DataGrid Grid.Row="1" ItemsSource="{Binding Victims}" SelectionEnabled="True" SelectedItem="{Binding SelectedVictim}"
                      RowHeight="70" HeaderHeight="50" PullToRefreshCommand="{Binding RefreshCommand}"
-                     IsRefreshing="{Binding IsRefreshing}" HeaderBackground="Red">
+                     IsRefreshing="{Binding IsRefreshing}" HeaderBackground="LightPink">
             <dg:DataGrid.NoDataView>
                 <Label Text="Nothing to see here 🙈" HorizontalOptions="Center" VerticalOptions="Center" />
             </dg:DataGrid.NoDataView>
